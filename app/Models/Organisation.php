@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\OrganisationScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -29,5 +30,10 @@ class Organisation extends Model
     public function nurseries(): HasMany
     {
         return $this->hasMany(Nursery::class);
+    }
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new OrganisationScope);
     }
 }
