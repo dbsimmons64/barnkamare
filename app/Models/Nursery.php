@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\OrganisationScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -25,5 +26,10 @@ class Nursery extends Model
     public function scopeOrganisation(Builder $query): void
     {
         $query->where('organisation_id', Auth::user()->organisation_id);
+    }
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new OrganisationScope);
     }
 }

@@ -32,8 +32,5 @@ class Organisation extends Model
         return $this->hasMany(Nursery::class);
     }
 
-    protected static function booted(): void
-    {
-        static::addGlobalScope(new OrganisationScope);
-    }
+    
 }
