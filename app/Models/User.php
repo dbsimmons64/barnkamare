@@ -3,12 +3,17 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+
+class User extends Authenticatable implements FilamentUser
+
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -19,8 +24,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'role',
         'email',
         'password',
+        'organisation_id'
     ];
 
     /**
@@ -40,6 +47,31 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+        'password'          => 'hashed',
     ];
+
+    public function organisation(): BelongsTo
+    {
+        return $this->belongsTo(Organisation::class);
+    }
+
+    public function hasRole($role)
+    {
+        return $this->role == $role;
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+
+        if ($panel->getId() === 'super') {
+            return $this->role == 'Super';
+        }
+
+        if ($panel->getId() === 'admin') {
+            return $this->role == 'Admin';
+        }
+
+        return false;
+    }
+
 }
