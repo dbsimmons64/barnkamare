@@ -16,10 +16,10 @@ class EnsureNurseryIsSelected
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->session()->has('nursery_id') && $request->route()->getName() != 'filament.nursery.resources.nurseries.index') {
+        if (!$request->session()->has('nursery_id') && $request->route()->getName() != 'filament.nursery.pages.select-nursery') {
             Log::info('route :'.$request->route()->getName());
 
-            return redirect(route('filament.nursery.resources.nurseries.index'));
+            return redirect(route('filament.nursery.pages.select-nursery'));
         }
 
         return $next($request);
