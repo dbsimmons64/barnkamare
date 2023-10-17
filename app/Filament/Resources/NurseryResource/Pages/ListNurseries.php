@@ -19,15 +19,5 @@ class ListNurseries extends ListRecords
         ];
     }
 
-    public function selectNursery(Nursery $nursery)
-    {
-
-        session([
-            'nursery_id'   => $nursery->id,
-            'nursery_name' => $nursery->name
-        ]);
-
-        redirect(route('filament.nursery.home'));
-
-    }
+    
 }
