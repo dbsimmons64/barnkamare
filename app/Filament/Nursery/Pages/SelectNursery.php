@@ -23,6 +23,8 @@ class SelectNursery extends Page implements Tables\Contracts\HasTable
 
     protected static string $view = 'filament.nursery.pages.select-nursery';
 
+    protected ?string $subheading = 'Please select a nursery to continue';
+
     public function table(Table $table): Table
     {
         return $table
@@ -54,7 +56,11 @@ class SelectNursery extends Page implements Tables\Contracts\HasTable
             'nursery_name' => $nursery->name
         ]);
 
-        redirect(route('filament.nursery.home'));
+        if (auth()->user()->role == 'Admin') {
+            return redirect(route('filament.admin.pages.dashboard'));
+        } else {
+            return redirect(route('filament.nursery.home'));
+        }
 
     }
 }

@@ -56,6 +56,12 @@ class NurseryResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('select')
+                    ->action(function (Component $livewire, Model $record) {
+
+                        $livewire->selectNursery($record);
+
+                    })
             ])
             ->bulkActions([
                 //

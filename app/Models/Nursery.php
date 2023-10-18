@@ -6,6 +6,7 @@ use App\Models\Scopes\OrganisationScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 
 class Nursery extends Model
@@ -31,5 +32,10 @@ class Nursery extends Model
     protected static function booted(): void
     {
         static::addGlobalScope(new OrganisationScope);
+    }
+
+    public function families(): HasMany
+    {
+        return $this->hasMany(Family::class);
     }
 }
