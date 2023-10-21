@@ -7,6 +7,7 @@ use App\Filament\Resources\FamilyResource\RelationManagers;
 use App\Models\Family;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Resources\RelationManagers\RelationGroup;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -51,7 +52,11 @@ class FamilyResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+
+            RelationManagers\AdultsRelationManager::class,
+            RelationManagers\ChildrenRelationManager::class,
+            
+
         ];
     }
 
